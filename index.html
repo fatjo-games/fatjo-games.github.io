@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fatjo Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a1a;
+      color: #ffffff;
+      font-family: 'Press Start 2P', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.08) 3px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: clamp(20px, 5vw, 36px);
+      color: #FFD700;
+      text-shadow: 3px 3px 0 #b8860b, 0 0 20px rgba(255,215,0,0.4);
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .tagline {
+      font-size: clamp(7px, 2vw, 11px);
+      color: #7799bb;
+      margin-bottom: 60px;
+      line-height: 2;
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid #1a2a4a;
+      margin: 40px 0;
+    }
+
+    .section-title {
+      font-size: clamp(8px, 2vw, 12px);
+      color: #00FFFF;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+    }
+
+    .games-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+    }
+
+    .game-card {
+      background: #0d1b33;
+      border: 2px solid #1a3a6a;
+      border-radius: 4px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 360px;
+      transition: border-color 0.2s, transform 0.2s;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .game-card:hover {
+      border-color: #00FFFF;
+      transform: translateY(-4px);
+    }
+
+    .game-icon {
+      width: 96px;
+      height: 96px;
+      background: #1a3a6a;
+      border: 2px solid #2a5a9a;
+      border-radius: 16px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+    }
+
+    .game-title {
+      font-size: clamp(10px, 3vw, 14px);
+      color: #FFD700;
+      margin-bottom: 12px;
+    }
+
+    .game-desc {
+      font-size: clamp(6px, 1.5vw, 8px);
+      color: #aabbcc;
+      line-height: 2.2;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #0a1a2a;
+      border: 1px solid #1a3a6a;
+      color: #7799bb;
+      font-size: 6px;
+      padding: 4px 8px;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00FFFF;
+      color: #000000;
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px, 2vw, 9px);
+      padding: 12px 20px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.15s;
+      letter-spacing: 1px;
+    }
+
+    .btn:hover {
+      background: #FFD700;
+      transform: scale(1.04);
+    }
+
+    .game-card.coming-soon {
+      opacity: 0.45;
+      border-style: dashed;
+      animation-delay: 1s;
+    }
+
+    .game-card.coming-soon .game-icon {
+      font-size: 28px;
+      color: #334;
+    }
+
+    footer {
+      margin-top: 80px;
+      font-size: 7px;
+      color: #334466;
+      line-height: 3;
+    }
+
+    footer a {
+      color: #4466aa;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #00FFFF;
+    }
+
+    .pixel-heart { color: #ff4466; }
+  </style>
+</head>
+<body>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="container">
+
+    <div class="logo">FATJO GAMES</div>
+    <div class="tagline">
+      Simple games. Endless fun.<br>
+      Made with <span class="pixel-heart">♥</span> by one person.
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-title">▶ OUR GAMES</div>
+
+    <div class="games-grid">
+
+      <div class="game-card">
+        <div class="game-icon">🧱</div>
+        <div class="game-title">STACK IT!</div>
+        <div class="badge">★ NOW ON GOOGLE PLAY ★</div>
+        <div class="game-desc">
+          Tap to drop the sliding block.<br>
+          Stack as high as you can.<br>
+          How far can you go?
+        </div>
+        <a class="btn" href="https://play.google.com/store/apps/details?id=com.fatjogames.stackit" target="_blank">
+          ▶ GET IT FREE
+        </a>
+      </div>
+
+      <div class="game-card coming-soon">
+        <div class="game-icon">?</div>
+        <div class="game-title" style="color:#334466">GAME #2</div>
+        <div class="badge">COMING SOON</div>
+        <div class="game-desc" style="color:#223344">
+          Something new is<br>
+          in the works...<br>
+          Stay tuned.
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider">
+
+    <footer>
+      <div>© 2026 FATJO GAMES — ALL RIGHTS RESERVED</div>
+      <div>
+        <a href="https://doc-hosting.flycricket.io/stack-it-privacy-policy/434b29fe-6789-41e4-bf7c-d956a493d0f2/privacy" target="_blank">PRIVACY POLICY</a>
+        &nbsp;·&nbsp;
+        <a href="mailto:fatjo.games@gmail.com">CONTACT</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-delay:${Math.random()*3}s;
+        animation-duration:${1.5+Math.random()*2}s;
+      `;
+      starsEl.appendChild(s);
+    }
+  </script>
+
+</body>
+</html>
