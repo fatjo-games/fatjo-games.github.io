@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Fatjo Games - Sleek, modern mobile arcade games. Single-tap mechanics, clean physics, and satisfying feedback.">
+  <title>Fatjo Games</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Sky Blue & Sleek Studio Palette */
+      --sky-light: #f0f9ff;
+      --sky-blue: #bae6fd;
+      --sky-deep: #0284c7;
+      
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(255, 255, 255, 0.6);
+      
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-blue: #0369a1;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffffff 0%, var(--sky-light) 50%, var(--sky-blue) 100%);
+      background-attachment: fixed;
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      padding-bottom: 80px;
+    }
+
+    /* Header & Branding (Modern Studio style) */
+    header {
+      text-align: center;
+      margin-bottom: 70px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .logo-text {
+      font-weight: 900;
+      font-size: clamp(2.5rem, 7vw, 4.2rem);
+      color: var(--text-main);
+      letter-spacing: -2px;
+      line-height: 0.95;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--sky-deep) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .tagline {
+      font-size: clamp(1rem, 3.2vw, 1.25rem);
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .tagline strong {
+      color: var(--sky-deep);
+      font-weight: 600;
+    }
+
+    /* Section Title */
+    .section-title {
+      font-weight: 900;
+      font-size: 2rem;
+      letter-spacing: -0.8px;
+      margin-bottom: 36px;
+      color: var(--text-main);
+      width: 100%;
+      text-align: left;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      padding-bottom: 12px;
+    }
+
+    /* Games Grid */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 36px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    /* Sleek Game Card */
+    .game-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.03), 
+        0 10px 15px -3px rgba(0, 0, 0, 0.04),
+        0 20px 25px -5px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 
+        0 10px 15px -3px rgba(2, 132, 199, 0.05),
+        0 25px 35px -5px rgba(2, 132, 199, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      border-color: rgba(2, 132, 199, 0.3);
+    }
+
+    /* Card Cover */
+    .card-cover {
+      height: 190px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background-color: #0f172a;
+    }
+
+    .card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .game-card:hover .card-cover img {
+      transform: scale(1.03);
+    }
+
+    /* Minimal Status Badges */
+    .card-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      border-radius: 30px;
+      padding: 6px 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .badge-published {
+      background-color: rgba(209, 250, 229, 0.9);
+      color: #065f46;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .badge-soon {
+      background-color: rgba(243, 244, 246, 0.9);
+      color: #374151;
+      border: 1px solid rgba(209, 213, 219, 0.3);
+    }
+
+    /* App Icon */
+    .card-icon {
+      position: absolute;
+      bottom: -24px;
+      right: 24px;
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.08),
+        0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      background-color: #ffffff;
+      z-index: 10;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .game-card:hover .card-icon {
+      transform: scale(1.05);
+    }
+
+    .card-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Card Info */
+    .card-body {
+      padding: 28px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      flex-grow: 1;
+    }
+
+    /* Sleek Actions Buttons */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-sleek {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--sky-deep) 0%, #0369a1 100%);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0ea5e9 0%, var(--sky-deep) 100%);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(15, 23, 42, 0.05);
+      color: var(--text-main);
+      box-shadow: none;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(15, 23, 42, 0.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-disabled {
+      background: #e2e8f0;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Footer (Modern & Minimal) */
+    footer {
+      margin-top: 100px;
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid rgba(15, 23, 42, 0.08);
+      padding-top: 40px;
+    }
+
+    .footer-info {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px 24px;
+    }
+
+    .footer-links a {
+      color: var(--sky-deep);
+      font-size: 0.82rem;
+      font-weight: 550;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #0369a1;
+      text-decoration: underline;
+    }
+
+    .heart {
+      color: #f43f5e;
+      display: inline-block;
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Branding Header -->
+    <header>
+      <h1 class="logo-text">FATJO GAMES</h1>
+      <p class="tagline">
+        Tactile, minimalist, and satisfying mobile arcade games. Built with <strong>clean physics</strong>, <strong>procedural audio</strong>, and a focus on high-fidelity play.
+      </p>
+    </header>
+
+    <!-- Main Featured Collection -->
+    <main style="width: 100%;">
+      <h2 class="section-title">Games</h2>
+      
+      <div class="games-grid">
+        
+        <!-- Stack It! -->
+        <article class="game-card">
+          <div class="card-cover">
+            <span class="card-badge badge-published">Published</span>
+            <img src="./assets/stack-it-featured.png" alt="Stack It Gameplay Screenshot">
+            <div class="card-icon">
+              <img src="./assets/stack-it-icon.png" alt="Stack It Icon">
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Stack It!</h3>
+            <p class="card-desc">
+              Tap to drop the sliding blocks. Build your tower to the clouds and journey past rolling green hills, twilight skies, and out into deep space. A highly addictive precision stacking reflex test!
+            </p>
+            <div class="button-group">
+              <a href="https://play.google.com/store/apps/details?id=com.fatjogames.stackit" class="btn-sleek btn-primary" target="_blank">
+                ▶ Get on Google Play
+              </a>
+              <a href="https://doc-hosting.flycricket.io/stack-it-privacy-policy/434b29fe-6789-41e4-bf7c-d956a493d0f2/privacy" class="btn-sleek btn-secondary" target="_blank">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Elevator Panic -->
+        <article class="game-card">
+          <div class="card-cover">
+            <span class="card-badge badge-published">Published</span>
+            <img src="./assets/elevator-panic-featured.png" alt="Elevator Panic Gameplay Screenshot">
+            <div class="card-icon">
+              <img src="./assets/elevator-panic-icon.png" alt="Elevator Panic Icon">
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Elevator Panic</h3>
+            <p class="card-desc">
+              Hurry up! Keep your passengers happy and align the elevator cabin perfectly at each floor. Watch your stars—sloppy timing leads to terrible 1-star reviews! Climb biomes and avoid getting fired.
+            </p>
+            <div class="button-group">
+              <a href="https://play.google.com/store/apps/details?id=com.fatjogames.elevatorpanic" class="btn-sleek btn-primary" target="_blank">
+                ▶ Get on Google Play
+              </a>
+              <a href="./privacy-elevator-panic.html" class="btn-sleek btn-secondary" target="_blank">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Flock Jump! -->
+        <article class="game-card">
+          <div class="card-cover">
+            <span class="card-badge badge-published">Published</span>
+            <img src="./assets/flock-jump-featured.png" alt="Flock Jump Gameplay Screenshot">
+            <div class="card-icon">
+              <img src="./assets/flock-jump-icon.png" alt="Flock Jump Icon">
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Flock Jump!</h3>
+            <p class="card-desc">
+              Steer your Rooster, collect eggs, and hatch a wobbly trailing army of baby chicks! A forgiving, physics-focused vertical platformer where your chicks serve as extra lives to revive you on any fall.
+            </p>
+            <div class="button-group">
+              <a href="https://play.google.com/store/apps/details?id=com.fatjogames.flockjump" class="btn-sleek btn-primary" target="_blank">
+                ▶ Get on Google Play
+              </a>
+              <a href="https://doc-hosting.flycricket.io/flock-jump-privacy-policy/aece0b96-2752-4a53-94e9-93e843c4e038/privacy" class="btn-sleek btn-secondary" target="_blank">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Stack the City 3D -->
+        <article class="game-card">
+          <div class="card-cover">
+            <span class="card-badge badge-soon">Coming Soon</span>
+            <img src="./assets/stack-the-city-featured.png" alt="Stack the City 3D Screenshot">
+            <div class="card-icon">
+              <img src="./assets/stack-the-city-icon.png" alt="Stack the City Icon">
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Stack the City 3D</h3>
+            <p class="card-desc">
+              Stack isometric slices to build towering modern structures in a cozy pastel landscape. Watch your skyscrapers lock into a persistent grid to construct a sprawling, glowing skyline!
+            </p>
+            <div class="button-group">
+              <a href="#" class="btn-sleek btn-primary btn-disabled" onclick="return false;">
+                ▶ Coming Soon
+              </a>
+              <a href="./privacy-stack-the-city.html" class="btn-sleek btn-secondary" target="_blank">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-info">
+        © 2026 FATJO GAMES — ALL RIGHTS RESERVED. Crafted with <span class="heart">♥</span> in Colorado.
+      </div>
+      <div class="footer-links">
+        <a href="https://doc-hosting.flycricket.io/stack-it-privacy-policy/434b29fe-6789-41e4-bf7c-d956a493d0f2/privacy" target="_blank">Stack It! Privacy</a>
+        <a href="./privacy-elevator-panic.html" target="_blank">Elevator Panic Privacy</a>
+        <a href="https://doc-hosting.flycricket.io/flock-jump-privacy-policy/aece0b96-2752-4a53-94e9-93e843c4e038/privacy" target="_blank">Flock Jump! Privacy</a>
+        <a href="./privacy-stack-the-city.html" target="_blank">Stack the City Privacy</a>
+        <a href="mailto:pclary@gmail.com">Contact Studio</a>
+      </div>
+    </footer>
+
+  </div>
+
+</body>
+</html>
